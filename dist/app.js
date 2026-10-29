@@ -6,3 +6,15 @@ function showDay(index){days.querySelectorAll('button').forEach((b,i)=>{b.classL
 dayNames.forEach((name,i)=>{const button=document.createElement('button');button.textContent=name;button.setAttribute('aria-label',fullNames[i]);button.addEventListener('click',()=>showDay(i));days.append(button)});showDay(0);document.querySelectorAll('[data-style]').forEach(button=>button.addEventListener('click',()=>{selectStyle(button.dataset.style);document.querySelector('#start').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}));document.querySelectorAll('[data-choice]').forEach(a=>a.addEventListener('click',()=>{choice.value=a.dataset.choice;updateChoice()}));choice.addEventListener('change',updateChoice);updateChoice();
 
 
+// Native swipe rows retain keyboard scrolling and visible scrollbars on mobile.
+document.querySelectorAll('.directions-grid,.price-grid,.faq-grid,#classes').forEach((track)=>{
+  const labels={ 'directions-grid':'Направления', 'price-grid':'Стоимость', 'faq-grid':'Вопросы' };
+  const label=labels[track.className]||'Занятия выбранного дня';
+  track.tabIndex=0;
+  track.setAttribute('role','region');
+  track.setAttribute('aria-label',label+' — горизонтальная прокрутка на телефоне');
+  const hint=document.createElement('p');
+  hint.className='scroll-hint';
+  hint.innerHTML='<span>Листайте карточки влево и вправо</span><span aria-hidden="true">← →</span>';
+  track.before(hint);
+});
