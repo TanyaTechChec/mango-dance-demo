@@ -15,6 +15,25 @@ document.querySelectorAll('.directions-grid,.price-grid,.faq-grid,#classes').for
   track.setAttribute('aria-label',label+' — горизонтальная прокрутка на телефоне');
   const hint=document.createElement('p');
   hint.className='scroll-hint';
-  hint.innerHTML='<span>Листайте карточки влево и вправо</span><span aria-hidden="true">← →</span>';
+  hint.innerHTML='<span>Листайте карточки</span><span class="scroll-arrows"><button type="button" class="scroll-arrow" aria-label="'+label+': предыдущая карточка">←</button><button type="button" class="scroll-arrow" aria-label="'+label+': следующая карточка">→</button></span>';
   track.before(hint);
+  const [previous,next]=hint.querySelectorAll('button');
+  const refresh=()=>{
+    previous.disabled=track.scrollLeft<=2;
+    next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-2;
+  };
+  const move=(direction)=>{
+    const cards=Array.from(track.children);
+    const origin=cards[0]?.getBoundingClientRect().left||0;
+    const positions=cards.map(card=>Math.max(0,card.getBoundingClientRect().left-origin));
+    const current=track.scrollLeft;
+    const target=direction>0?positions.find(position=>position>current+3):positions.reverse().find(position=>position<current-3);
+    track.scrollTo({left:target??(direction>0?track.scrollWidth:0),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  };
+  previous.addEventListener('click',()=>move(-1));
+  next.addEventListener('click',()=>move(1));
+  track.addEventListener('scroll',refresh,{passive:true});
+  new ResizeObserver(refresh).observe(track);
+  new MutationObserver(()=>{track.scrollLeft=0;requestAnimationFrame(refresh)}).observe(track,{childList:true});
+  refresh();
 });

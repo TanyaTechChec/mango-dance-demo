@@ -11,6 +11,10 @@
 .kids-copy .button{padding:13px 18px}
 .kids-copy .note{margin-top:10px}
 .scroll-hint{display:none}
+.scroll-hint .scroll-arrows{display:flex;gap:8px;letter-spacing:0}
+.scroll-arrow{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #d9e3d0;background:white;color:var(--green);font-size:21px;cursor:pointer;touch-action:manipulation;border-radius:50%}
+.scroll-arrow:hover:not(:disabled){background:#edf4e7;border-color:var(--green)}
+.scroll-arrow:disabled{opacity:.3;cursor:default}
 @media(max-width:650px){
   .section{padding-top:32px;padding-bottom:32px}
   .section-title{margin-bottom:20px}
@@ -53,3 +57,4 @@
   .kids-copy .note{font-size:8px;line-height:1.7}
   .start-form{margin-top:22px}
 }
+.scroll-arrow{width:44px;height:44px;letter-spacing:0}
