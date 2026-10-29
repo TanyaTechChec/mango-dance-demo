@@ -58,6 +58,10 @@
   .start-form{margin-top:22px}
 }
 .scroll-arrow{width:44px;height:44px;letter-spacing:0}
+header{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 0 #26292412}
+html{scroll-padding-top:115px}
+@media(min-width:651px) and (max-width:1000px){html{scroll-padding-top:105px}}
+@media(max-width:650px){html{scroll-padding-top:145px}}
 @media(max-width:650px){
   .directions-grid,.price-grid,.faq-grid,#classes{scrollbar-width:none;-ms-overflow-style:none}
   .directions-grid::-webkit-scrollbar,.price-grid::-webkit-scrollbar,.faq-grid::-webkit-scrollbar,#classes::-webkit-scrollbar{display:none;width:0;height:0}
